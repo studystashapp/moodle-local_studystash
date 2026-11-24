@@ -1,0 +1,11 @@
+/.phpunit.result.cache
+/vendor/
+/.idea/
+/.vscode/
+.DS_Store
+
+/.env
+/.env.*
+/config.php
+/dist/
+/.phpunit.cache/

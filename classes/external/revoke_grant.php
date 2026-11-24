@@ -1,0 +1,71 @@
+<?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
+/**
+ * StudyStash Moodle integration.
+ *
+ * @package    local_studystash
+ * @copyright  2026 StudyStash Limited
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+namespace local_studystash\external;
+
+use core_external\external_function_parameters;
+use core_external\external_single_structure;
+use core_external\external_value;
+use local_studystash\local\token_service;
+
+/**
+ * Revokes a linked identity and its active tokens.
+ */
+final class revoke_grant extends installation_operation {
+    /**
+     * Describe the operation parameters.
+     *
+     * @return external_function_parameters
+     */
+    public static function execute_parameters(): external_function_parameters {
+        return new external_function_parameters([
+            'input' => new external_single_structure([
+                'refresh_token' => new external_value(PARAM_RAW, 'Opaque refresh token.'),
+            ]),
+        ]);
+    }
+
+    /**
+     * Revoke a user grant.
+     *
+     * @param array $input Request data.
+     * @return array Revocation response.
+     */
+    public static function execute(array $input): array {
+        ['input' => $input] = self::validate_parameters(self::execute_parameters(), ['input' => $input]);
+        self::validate_installation_context();
+
+        token_service::revoke_link($input['refresh_token']);
+        return ['revoked' => true];
+    }
+
+    /**
+     * Describe the operation result.
+     *
+     * @return external_single_structure
+     */
+    public static function execute_returns(): external_single_structure {
+        return structures::revoked();
+    }
+}
