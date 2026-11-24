@@ -19,71 +19,15 @@ Download the installable package from [the latest release](https://github.com/st
 
 Choose the **`local_studystash-v1.0.0.zip`** release asset for installation. GitHub's automatically generated source archives are intended for source-code downloads.
 
-## Install
+## Installation and setup
 
-1. Download the plugin ZIP and keep it zipped.
-2. In Moodle, open **Site administration → Plugins → Install plugins**.
-3. Upload the ZIP under **Install plugin from ZIP file**, then select **Install plugin from the ZIP file**. If prompted for the plugin type, choose **Local plugin (local)**.
-4. Review the validation and server checks. Select **Upgrade Moodle database now** when Moodle prompts you, then continue after installation succeeds.
+Follow the [**Moodle content ingestion setup guide**](https://help.studystash.com/integrations/moodle-plugin-setup) in the StudyStash Help Centre for installation, connecting the plugin, enabling LTI or OAuth access, testing an import and troubleshooting.
 
-If your hosting provider manages plugins, ask them to install the package. For manual installation, extract the `studystash` directory into Moodle's `local/` directory, then complete Moodle's standard upgrade process. The installed path must be `local/studystash`, regardless of this repository's name.
-
-## Connect to StudyStash
-
-1. In Moodle, open **Site administration → Plugins → Local plugins → StudyStash**.
-2. Under **Access controls**, select **Enable StudyStash integration**, then select **Save configuration**.
-3. Under **Connection credentials**, copy the **Installation ID**. Select **Reveal setup secret** to copy the one-time **Installation secret**. Keep this page open while you enter the credentials in StudyStash.
-4. In the **StudyStash Admin Dashboard**, select the relevant campus and open **Integrations → your Moodle connection → Content ingestion**.
-5. Select **Enable**. In **Connect the Moodle plugin**, enter the Moodle **Installation ID** as **Client ID** and the **Installation secret** as **Secret**, then select **Connect and enable**.
-6. Enable the access methods your users need, as described below.
-
-The Client ID in the plugin connection dialog is the plugin's Installation ID. Your Moodle LTI tool has a separate Client ID.
-
-The complete installation secret is shown only once. Keep it private. If you lose it, select **Rotate secret** in Moodle and update the plugin connection in StudyStash with the new secret. Rotation disconnects the existing pairing until the new secret is saved.
-
-### LTI access
-
-Use LTI access when users open StudyStash through a Moodle course activity.
-
-1. Configure your StudyStash LTI tool and deployment using the [Moodle LTI setup guide](https://help.studystash.com/integrations/moodle).
-2. Keep **Enable StudyStash integration** selected in the Moodle plugin.
-3. In StudyStash's **Content ingestion** tab, turn on **LTI access** for the Moodle deployment and check that its status reads **Connected**.
-4. Launch the **StudyStash** activity from a Moodle course using an account that can view the course files.
-
-LTI access is connected to the exact client and deployment registered for your Moodle tool. Disconnecting that deployment blocks its existing LTI grants and future LTI content access.
-
-### OAuth access
-
-Use OAuth access when users open StudyStash directly and connect their Moodle account. **All three settings below must remain enabled:**
-
-| Location | Required setting |
-| --- | --- |
-| Moodle plugin, **Access controls** | **Enable StudyStash integration** |
-| Moodle plugin, **Access controls** | **Enable OAuth access** |
-| StudyStash, **Content ingestion** | **OAuth access** |
-
-Select both Moodle checkboxes, then select **Save configuration**. Turn on the StudyStash **OAuth access** switch for the same Moodle connection.
-
-Users can then open StudyStash directly, select **Import from Moodle**, connect their Moodle account and approve the connection in Moodle. OAuth access can be enabled independently of LTI access. Enable both access methods if your users need both entry points.
-
-## Import course files
-
-In StudyStash's **My Stash**, open **Create Notes** or **Create Flashcards**, then select **Import from Moodle**. Connect your Moodle account if prompted, choose a course and select files or pages before generating your resources.
+## Supported content
 
 The plugin supports files in Moodle **File** (`resource`) and **Folder** (`folder`) activities. Course enrolment, activity visibility and file access are checked using the connected Moodle user's permissions. Installing or pairing the plugin does not grant users access to every course on the site.
 
-## Updating
-
-Back up your Moodle site and database using your normal maintenance process. Upload the newer release ZIP through **Install plugins**, or replace `local/studystash` with the new plugin directory, then complete Moodle's upgrade process. Do not uninstall the plugin as part of a routine update.
-
-## Troubleshooting
-
-- **Installation fails:** check Moodle's validation message, confirm Moodle 4.4 or later and verify that the installed directory is `local/studystash`.
-- **Pairing fails:** check that the integration is enabled in Moodle, that StudyStash points to the correct Moodle site and that the Installation ID and secret match.
-- **LTI access is unavailable:** check the tool's Client ID and Deployment ID, the deployment connection in StudyStash and the Moodle plugin's integration switch.
-- **OAuth connection fails:** verify all three settings in the OAuth table above, then try connecting the user's Moodle account again.
-- **Courses or files are missing:** confirm that the same Moodle user can view them in Moodle. Check that the file is in a supported File or Folder activity.
-- **Requests are blocked:** check whether your firewall or access gateway is intercepting the plugin API or OAuth authorisation page.
+## Support
 
 For setup assistance, [contact StudyStash support](https://help.studystash.com/support). Report reproducible plugin bugs in [GitHub Issues](https://github.com/studystashapp/moodle-local_studystash/issues). Include the plugin version, Moodle version and error message. Do not include installation secrets, access tokens or personal course content.
 
